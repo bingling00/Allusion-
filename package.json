@@ -53,7 +53,9 @@
       ]
     },
     "nsis": {
-      "oneClick": false
+      "oneClick": false,
+      "installerHeader": "./resources/logo/bmp/installerHeaderDark.bmp",
+      "installerSidebar": "./resources/logo/bmp/installerSidebarDark.bmp"
     },
     "portable": {
       "artifactName": "${productName}Portable.${version}.${ext}"

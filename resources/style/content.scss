@@ -193,7 +193,7 @@
 
       &:not(:first-child):not(:last-child) {
         height: 24px;
-        padding-top: 2px;
+        padding-top: 3px;
       }
 
       > .filename {
@@ -204,6 +204,7 @@
         max-width: calc(100% - 32px); // minus thumbnail and some padding
         margin-left: 4px;
         padding: 2px;
+        padding-top: 4px;
       }
 
       .thumbnail-broken {

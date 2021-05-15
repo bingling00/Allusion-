@@ -25,7 +25,7 @@
     display: flex;
     align-items: center;
     padding-left: calc(var(--level) * var(--treeitem-identation) + var(--treeitem-offset));
-    padding-right: 0.5rem;
+    padding-right: calc(0.5rem - 3px);
 
     &:hover {
       background-color: var(--hover-color);
