@@ -7,6 +7,7 @@
 
   --background-color: rgb(28, 30, 35);
   --background-color-alt: rgb(35, 37, 46);
+  --background-color-contrast: rgb(59, 61, 68);
 
   --shade1: rgb(21, 23, 26);
   --shade2: rgb(18, 18, 24);
@@ -18,7 +19,7 @@
   --hover-color-alt: var(--shade2);
 
   --scrollbar-track-color: var(--shade1);
-  --scrollbar-thumb-color: var(--background-color-alt);
+  --scrollbar-thumb-color: var(--background-color-contrast);
   --scrollbar-thumb-hover-color: var(--text-color-muted);
 
   --border-color: var(--shade2);
@@ -33,6 +34,7 @@
 
   --background-color: rgb(240, 240, 240);
   --background-color-alt: rgb(248, 248, 248);
+  --background-color-contrast: rgb(201, 195, 195);
 
   --shade1: rgb(232, 232, 232);
   --shade2: rgb(221, 221, 221);
@@ -44,7 +46,7 @@
   --hover-color-alt: var(--shade2);
 
   --scrollbar-track-color: var(--shade1);
-  --scrollbar-thumb-color: var(--background-color-alt);
+  --scrollbar-thumb-color: var(--background-color-contrast);
   --scrollbar-thumb-hover-color: var(--text-color-muted);
 
   --border-color: var(--shade2);
