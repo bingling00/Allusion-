@@ -439,6 +439,9 @@
       transition: 0.25s $pt-transition-cubic2;
       max-height: 2.8em;
       max-width: 100%;
+      padding-left: 0.25rem;
+      padding-right: 0.25rem;
+      padding-bottom: 0.15rem;
 
       > * {
         margin: 0.25em;

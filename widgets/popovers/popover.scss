@@ -31,6 +31,19 @@
     margin: 0;
   }
 
+  // ALSO USED IN DIALOG
+  @keyframes fade {
+    0% {
+      opacity: 0;
+    }
+    50% {
+      opacity: 0.5;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+
   &[data-tooltip] {
     opacity: unset;
     pointer-events: none;
