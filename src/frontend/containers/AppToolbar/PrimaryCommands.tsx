@@ -7,13 +7,13 @@ import FileStore from 'src/frontend/stores/FileStore';
 import { IconSet } from 'widgets';
 import { ToolbarButton, ToolbarToggleButton } from 'widgets/menus';
 import { FileRemoval } from 'src/frontend/components/RemovalAlert';
-import TagFilesPopover from 'src/frontend/containers/AppToolbar/TagFilesPopover';
+import FileTagEditor from 'src/frontend/containers/AppToolbar/FileTagEditor';
 import Searchbar from './Searchbar';
 import { SortCommand, ViewCommand } from './Menus';
 
 // Tooltip info
 export const enum Tooltip {
-  TagFiles = 'Quick add or delete tags to selection',
+  TagFiles = 'Add or remove tags from selected images',
   Select = 'Selects or deselects all images',
   Delete = 'Delete selected missing images from library',
   Inspector = 'Toggle the inspector panel',
@@ -57,7 +57,7 @@ const PrimaryCommands = observer((props: { uiStore: UiStore; fileStore: FileStor
         <RemoveFilesPopover uiStore={uiStore} />
       ) : (
         // Only show when not viewing missing files (so it is replaced by the Delete button)
-        <TagFilesPopover />
+        <FileTagEditor />
       )}
 
       <SortCommand fileStore={fileStore} />
@@ -81,6 +81,8 @@ export const SlideModeCommand = observer(({ uiStore }: { uiStore: UiStore }) => 
       />
 
       <div className="spacer" />
+
+      <FileTagEditor />
 
       <ToolbarButton
         showLabel="never"
