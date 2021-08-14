@@ -29,7 +29,13 @@
       ]
     },
     "dmg": {
-      "icon": false
+      "background": "./resources/images/background-osx.png",
+      "icon": "./resources/logo/icns/allusion-logo-ver-fc-white.icns",
+      "iconSize": 80,
+      "contents": [
+        { "x": 388, "y": 245, "type": "link", "path": "/Applications" },
+        { "x": 155, "y": 245, "type": "file" }
+      ]
     },
     "linux": {
       "target": [
