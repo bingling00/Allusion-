@@ -697,7 +697,7 @@ class UiStore {
   }
 
   @action.bound processGlobalShortCuts(e: KeyboardEvent) {
-    if ((e.target as HTMLElement).matches('input')) {
+    if ((e.target as HTMLElement | null)?.matches('input') === true) {
       return;
     }
     const combo = getKeyCombo(e);

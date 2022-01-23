@@ -2,7 +2,7 @@ import fse from 'fs-extra';
 import path from 'path';
 import { IMG_EXTENSIONS } from 'src/entities/File';
 import { ALLOWED_DROP_TYPES } from 'src/frontend/contexts/DropContext';
-import { timeoutPromise } from 'src/frontend/utils';
+import { retainArray, timeoutPromise } from 'src/frontend/utils';
 import { IStoreFileMessage, RendererMessenger } from 'src/Messaging';
 import { DnDAttribute } from 'src/frontend/contexts/TagDnDContext';
 import { Sequence } from 'common/sequence';
@@ -154,25 +154,21 @@ async function getDropData(e: React.DragEvent): Promise<Array<File | string>> {
     }
   }
 
+  const imageItems = Array.from(dropItems);
   // Filter out URLs that are not an image
-  const imageItems = await Promise.all(
-    Sequence.from(dropItems).map(async (item) => {
+  const imageChecks = await Promise.all(
+    Sequence.from(imageItems).map(async (item) => {
       if (item instanceof File) {
-        return item;
-      } else {
+        return true;
         // Check if the URL has an image extension, or perform a network request
-        if (
-          IMG_EXTENSIONS.some((ext) => item.toLowerCase().includes(`.${ext}`)) ||
-          (await testImage(item))
-        ) {
-          return item;
-        } else {
-          return undefined;
-        }
+      } else if (IMG_EXTENSIONS.some((ext) => item.toLowerCase().indexOf(`.${ext}`) !== -1)) {
+        return true;
+      } else {
+        return await testImage(item);
       }
     }),
   );
-  return Sequence.from(imageItems)
-    .filterMap((item) => item)
-    .collect();
+  // Remove all items that are not images from the array.
+  retainArray(imageItems, (_, i) => imageChecks[i]);
+  return imageItems;
 }
