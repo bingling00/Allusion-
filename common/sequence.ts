@@ -1,7 +1,7 @@
 export class Sequence<T> implements Iterable<T> {
   private readonly generator: () => Generator<T, void, void>;
 
-  constructor(generator: () => Generator<T>) {
+  constructor(generator: () => Generator<T, void, void>) {
     this.generator = generator;
   }
 
@@ -17,7 +17,7 @@ export class Sequence<T> implements Iterable<T> {
     });
   }
 
-  static empty<T>(): Sequence<T> {
+  static empty(): Sequence<never> {
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     return new Sequence(function* () {});
   }
@@ -180,4 +180,19 @@ export class Sequence<T> implements Iterable<T> {
   collect(): T[] {
     return Array.from(this.generator());
   }
+}
+
+export function drainFilter<T>(array: T[], predicate: (item: T) => boolean): Sequence<T> {
+  return new Sequence(function* () {
+    let count = 0;
+    for (let i = array.length - 1; i >= 0; i--) {
+      if (predicate(array[i])) {
+        count += 1;
+      } else {
+        yield* array.splice(i + 1, count);
+        count = 0;
+      }
+    }
+    yield* array.splice(0, count);
+  });
 }

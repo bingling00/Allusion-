@@ -1,5 +1,4 @@
 import { action, IObservableArray, makeObservable, observable } from 'mobx';
-import { Sequence } from 'common/sequence';
 import RootStore from 'src/frontend/stores/RootStore';
 import { IFile } from './File';
 import { ID } from './ID';
@@ -24,11 +23,7 @@ export class ClientSearchItem<T> {
   constructor(id: ID, name: string, criteria: SearchCriteria<T>[], matchAny: boolean) {
     this.id = id;
     this.name = name;
-    this.criteria = observable(
-      Sequence.from(criteria)
-        .map((c) => ClientBaseCriteria.deserialize(c))
-        .collect(),
-    );
+    this.criteria = observable(criteria.map((c) => ClientBaseCriteria.deserialize(c)));
     this.matchAny = matchAny;
 
     makeObservable(this);

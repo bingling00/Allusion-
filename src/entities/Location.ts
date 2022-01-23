@@ -44,7 +44,8 @@ export class ClientSubLocation implements ISubLocation {
     this.name = name;
     this.isExcluded = excluded;
     this.subLocations = observable(
-      Sequence.from(subLocations.sort(sort))
+      subLocations
+        .sort(sort)
         .map(
           (subLoc) =>
             new ClientSubLocation(
@@ -54,8 +55,7 @@ export class ClientSubLocation implements ISubLocation {
               subLoc.isExcluded,
               subLoc.subLocations,
             ),
-        )
-        .collect(),
+        ),
     );
 
     makeObservable(this);
@@ -117,7 +117,8 @@ export class ClientLocation implements ISerializable<ILocation> {
     this.extensions = extensions;
 
     this.subLocations = observable(
-      Sequence.from(subLocations.sort(sort))
+      subLocations
+        .sort(sort)
         .map(
           (subLoc) =>
             new ClientSubLocation(
@@ -127,8 +128,7 @@ export class ClientLocation implements ISerializable<ILocation> {
               subLoc.isExcluded,
               subLoc.subLocations,
             ),
-        )
-        .collect(),
+        ),
     );
 
     makeObservable(this);
@@ -341,23 +341,19 @@ async function getDirectoryTree(path: string): Promise<IDirectoryTreeItem[]> {
       Sequence.from(await fse.readdir(path)).map(async (file) => {
         const fullPath = SysPath.join(path, file);
         if ((await fse.stat(fullPath)).isDirectory()) {
-          return fullPath;
+          return {
+            name: SysPath.basename(fullPath),
+            fullPath,
+            children: await getDirectoryTree(fullPath),
+          };
         } else {
           return undefined;
         }
       }),
     );
-    return Promise.all(
-      Sequence.from(dirs)
-        .filterMap((d) => d)
-        .map(
-          async (dir): Promise<IDirectoryTreeItem> => ({
-            name: SysPath.basename(dir),
-            fullPath: dir,
-            children: await getDirectoryTree(dir),
-          }),
-        ),
-    );
+    return Sequence.from(dirs)
+      .filterMap((d) => d)
+      .collect();
   } catch (e) {
     return [];
   }
